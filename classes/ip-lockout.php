@@ -74,13 +74,13 @@ class Ninja_Demo_IP_Lockout {
 	 * 
 	 * @access public
 	 * @since 1.0
-	 * @return string $expires
+	 * @return int|false Timestamp or false if none.
 	 */
 	public function get_ip_lockout( $ip ) {
 		global $wpdb;
 
 		$expires = $wpdb->get_row( $wpdb->prepare( 'SELECT time_expires FROM ' . ND_IP_LOCKOUT_TABLE . ' WHERE ip = %s', $ip ), ARRAY_A );
-		return $expires['time_expires'];
+		return $expires['time_expires'] ?? false;
 	}
 
 	/**

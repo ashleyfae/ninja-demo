@@ -1164,15 +1164,18 @@ class Ninja_Demo_Sandbox {
 				/*------------------------------------------------------------------------------------------------------------------
 				*/
 				$index_fields = "";  // reset fields for each table.
-				$column_name = "";
-				$table_index = "";
+				$column_name = [];
+				$table_index = [];
 				$i = 0;
 
-				foreach ( $fields_list as $field_rows ) {
-					$column_name[ $i++ ] = $field_rows['Field'];
-					if ( $field_rows['Key'] == 'PRI')
-						$table_index[] = $field_rows['Field'] ;
-				}
+                if (is_array($fields_list)) {
+                    foreach ($fields_list as $field_rows) {
+                        $column_name[$i++] = $field_rows['Field'];
+                        if ($field_rows['Key'] == 'PRI') {
+                            $table_index[] = $field_rows['Field'];
+                        }
+                    }
+                }
 
 				// skip if no primary key
 				if( empty( $table_index) ) continue;

@@ -379,8 +379,15 @@ class Ninja_Demo_Shortcodes {
 		$eq = str_replace( '=', '', $eq );
 	    $eq = preg_replace ('[^0-9\+-\*\/\(\) ]', '', $eq);    // remove any non-numbers chars; exception for math operators
 
-	    $compute = create_function("", "return (" . $eq . ");" );
-	    return 0 + $compute();
+        if (strpos($eq, ' + ') !== false) {
+            $pieces = explode(' + ', $eq);
+
+            return (int) ($pieces[0] ?? 0) + (int) ($pieces[1] ?? 0);
+        } elseif (strpos($eq, ' - ') !== false) {
+            $pieces = explode(' - ', $eq);
+
+            return (int) ($pieces[0] ?? 0) - (int) ($pieces[1] ?? 0);
+        }
 	}
 
 	/**
